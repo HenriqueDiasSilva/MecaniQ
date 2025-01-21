@@ -18,3 +18,7 @@ body {
   min-height: 94.3vh;
   height: auto;
 }
+
+.bg-gray {
+  background-color: #E9E9E9;
+}
