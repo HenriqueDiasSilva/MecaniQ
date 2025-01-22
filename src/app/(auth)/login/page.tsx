@@ -44,10 +44,11 @@ export default function Login() {
             const usuario = data[0];
             localStorage.removeItem("usuario");
             localStorage.setItem('usuario', JSON.stringify({ id: usuario.id }));
-            setLoading(false);
             router.push('/home');
         } else {
-            alert('Usuário ou senha inválidos.');
+            setShow(true);
+            setMessage('Usuário ou senha incorretos.');
+            setLoading(false);
         }
     }
 
@@ -59,11 +60,11 @@ export default function Login() {
                 <p>Faça o login na sua conta</p>
 
                 <div className='col-12 col-md-8 my-3'>
-                    <FloatingLabel controlId="floatingInput" label="Usuário" className="text-secondary">
+                    <FloatingLabel controlId="floatingInput" label="E-mail" className="text-secondary">
                         <Form.Control
                             autoComplete="off"
                             type="text"
-                            placeholder="Usuário"
+                            placeholder="E-mail"
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </FloatingLabel>
@@ -81,7 +82,7 @@ export default function Login() {
                 </div>
 
                 <div className='col-12 d-flex justify-content-center mt-4'>
-                    <Button className="col-12 col-md-8" variant="dark" type="submit">
+                    <Button className="col-12 col-md-8" variant="dark" type="submit" disabled={loading}>
                         {loading ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : 'Acessar'}
                     </Button>
                 </div>
