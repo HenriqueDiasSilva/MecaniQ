@@ -22,3 +22,15 @@ body {
 .bg-gray {
   background-color: #E9E9E9;
 }
+
+.button {
+  min-width: 100px !important;
+}
+
+.link {
+  cursor: pointer;
+}
+
+.dropdown-item:active {
+  background-color: #dddcdc !important;
+}
