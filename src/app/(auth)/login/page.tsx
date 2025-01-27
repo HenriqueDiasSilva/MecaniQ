@@ -44,7 +44,7 @@ export default function Login() {
             const usuario = data[0];
             localStorage.removeItem("usuario");
             localStorage.setItem('usuario', JSON.stringify({ id: usuario.id }));
-            router.push('/home');
+            router.push('/dashboard');
         } else {
             setShow(true);
             setMessage('Usuário ou senha incorretos.');

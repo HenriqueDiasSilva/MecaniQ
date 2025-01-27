@@ -121,7 +121,7 @@ export default function Profile() {
     }
 
     return (
-        <div className="page-intern row bg-gray">
+        <div className="page-intern row">
             <div className="d-flex justify-content-center align-items-center">
                 {loading ?
                     <div className="position-absolute top-50 start-50 translate-middle">
@@ -131,11 +131,11 @@ export default function Profile() {
                     </div>
                     :
                     <Form
-                        className="col-10 col-md-8 col-lg-6 col-xl-4 bg-white d-flex flex-column align-items-center ms-auto me-auto mb-auto p-4 rounded-3 mt-5"
+                        className="col-12 col-md-8 col-lg-6 col-xl-4 d-flex flex-column align-items-center ms-auto me-auto mb-auto p-4 rounded-3"
                         onSubmit={handleEdit}>
                         <h3 className="fw-bold">Perfil do Usuário</h3>
                         <p>Dados Cadastrados</p>
-                        <div className="col-9">
+                        <div className="col-12">
                             <FloatingLabel controlId="floatingInputNome" label="Nome" className="text-secondary">
                                 <Form.Control
                                     autoComplete="off"
@@ -146,7 +146,7 @@ export default function Profile() {
                                 />
                             </FloatingLabel>
                         </div>
-                        <div className="col-9 mt-3">
+                        <div className="col-12 mt-3">
                             <FloatingLabel controlId="floatingInputEmail" label="Email" className="text-secondary">
                                 <Form.Control
                                     autoComplete="off"
@@ -158,7 +158,7 @@ export default function Profile() {
                             </FloatingLabel>
                         </div>
 
-                        <div className="col-9 mt-3">
+                        <div className="col-12 mt-3">
                             <FloatingLabel controlId="floatingInputWhats" label="Telefone" className="text-secondary">
                                 <Form.Control
                                     autoComplete="off"
@@ -170,7 +170,7 @@ export default function Profile() {
                             </FloatingLabel>
                         </div>
 
-                        <div className="col-9 mt-3">
+                        <div className="col-12 mt-3">
                             <FloatingLabel controlId="floatingInputPassword" label="Senha" className="text-secondary">
                                 <Form.Control
                                     autoComplete="off"
@@ -182,7 +182,7 @@ export default function Profile() {
                             </FloatingLabel>
                         </div>
 
-                        <div className="col-9 mt-2">
+                        <div className="col-12 mt-2">
                             <Form.Check label="Exibir Senha" type={'checkbox'} onChange={() => setShowPassword(!showPassword)} />
                         </div>
 

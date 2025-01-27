@@ -23,23 +23,25 @@ function NavbarComponent({ name }: NavbarComponentProps) {
   }
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar bg="dark" data-bs-theme="dark" expand="lg">
       <Container>
         <Navbar.Brand>
-          <Link href={'/home'} className='text-decoration-none link-default'>
-            <span className='text-dark'>MECANIQ</span>
+          <Link href={'/home'} className='text-decoration-none'>
+            <span className='text-white'>MECANIQ</span>
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Link className="text-decoration-none link-secondary" href="/register">Cadastro</Link>
+          <Nav className="me-auto gap-2 ms-lg-2 gap-lg-4">
+            <Link className="text-decoration-none link-light" href="/pecas">Peças</Link>
+            <Link className="text-decoration-none link-light" href="/veiculos">Veículos</Link>
+            <Link className="text-decoration-none link-light" href="/relatorios">Relatórios</Link>
           </Nav>
           <div className="d-flex justify-content-start justify-content-lg-end mt-2 mt-lg-0">
-            <PersonCircle size={22} className='link-secondary' />
-            <NavDropdown className="link-secondary ms-2" title={name} id="basic-nav-dropdown">
-              <Link className="dropdown-item link-secondary" href="/profile">Perfil</Link>
-              <div className="dropdown-item link-secondary link" onClick={handleExit}>Sair</div>
+            <PersonCircle size={22} className='link-light' />
+            <NavDropdown className="link-light ms-2" title={name} id="basic-nav-dropdown">
+              <Link className="dropdown-item link-light" href="/profile">Perfil</Link>
+              <div className="dropdown-item link-light link" onClick={handleExit}>Sair</div>
             </NavDropdown>
           </div>
         </Navbar.Collapse>
