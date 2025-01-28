@@ -1,3 +1,5 @@
+'use client'
+
 import { ToastContainer } from 'react-bootstrap';
 import Toast from 'react-bootstrap/Toast';
 

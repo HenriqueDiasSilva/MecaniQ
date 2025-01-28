@@ -1,6 +1,5 @@
 'use client';
 
-
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -35,6 +34,7 @@ function NavbarComponent({ name }: NavbarComponentProps) {
           <Nav className="me-auto gap-2 ms-lg-2 gap-lg-4">
             <Link className="text-decoration-none link-light" href="/pecas">Peças</Link>
             <Link className="text-decoration-none link-light" href="/veiculos">Veículos</Link>
+            <Link className="text-decoration-none link-light" href="/os">Ordem de Serviço</Link>
             <Link className="text-decoration-none link-light" href="/relatorios">Relatórios</Link>
           </Nav>
           <div className="d-flex justify-content-start justify-content-lg-end mt-2 mt-lg-0">

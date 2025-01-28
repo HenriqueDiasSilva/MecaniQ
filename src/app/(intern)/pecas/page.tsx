@@ -1,9 +1,13 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/app/utils/supabase";
-import { Button, FloatingLabel, Form, Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import ToastComponent from "@/app/components/toast";
+
+import { Trash, Pencil } from 'react-bootstrap-icons';
+import ModalComponent from "@/app/components/modal";
 
 interface Part {
     id: number;
@@ -14,45 +18,55 @@ interface Part {
 
 export default function Parts() {
     const [parts, setParts] = useState<Part[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [partId, setPartId] = useState(0);
+    const [partName, setPartName] = useState('');
 
+    const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(false);
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');
 
+    const [showModal, setShowModal] = useState(false);
+    const [titleModal, setTitleModal] = useState('');
+    const [messageModal, setMessageModal] = useState('');
+
+    const router = useRouter();
+
     useEffect(() => {
-        setLoading(true);
-        if (typeof window !== "undefined") {
-            const userData = localStorage.getItem("usuario");
-            if (userData) {
-                try {
-                    const parsedData = JSON.parse(userData);
-                    fetchParts(parsedData.id);
-                } catch (error) {
-                    setShow(true);
-                    setTitle("Erro");
-                    setMessage("Erro ao buscar usuário. Tente novamente.");
-                } finally {
-                    setLoading(false);
-                }
-            } else {
-                console.log("Nenhum dado encontrado no localStorage para a chave 'usuario'");
-                setShow(true);
-                setTitle("Erro");
-                setMessage("Nenhum usuário logado. Tente logar novamente.");
-            }
-        }
+        fetchParts();
     }, []);
 
-    async function fetchParts(id: number) {
-        const { data, error } = await supabase.from('parts').select('*').eq('id_user', id);
-        if (error) {
+    async function fetchParts() {
+        setLoading(true);
+        try {
+            const { data: partsData } = await supabase.from('parts').select('*');
+            setParts(partsData || []);
+        } catch (error) {
             setShow(true);
-            setTitle("Erro");
-            setMessage("Erro ao carregar peças. Tente novamente.");
-        } else {
-            setParts(data || []);
+            setTitle('Erro');
+            setMessage('Erro ao carregar pe as. Tente novamente.');
+        } finally {
+            setLoading(false);
         }
+    }
+
+    async function handleDeletePart() {
+        setLoading(true);
+        try {
+            await supabase.from('parts').delete().eq('id', partId);
+            fetchParts();
+        } catch (error) {
+            setShow(true);
+            setTitle('Erro');
+            setMessage('Erro ao deletar peça. Tente novamente.');
+        } finally {
+            setLoading(false);
+            setShowModal(false);
+        }
+    }
+
+    function handleEditPart(id: number) {
+        router.push(`/pecas/${id}`);
     }
 
     return (
@@ -79,14 +93,19 @@ export default function Parts() {
                                         <th>Nome</th>
                                         <th>Quantidade</th>
                                         <th>Preço</th>
+                                        <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {parts.map((peca) => (
-                                        <tr key={peca.id}>
-                                            <td>{peca.name}</td>
-                                            <td>{peca.number}</td>
-                                            <td>R$ {Number(peca.price).toFixed(2)}</td>
+                                    {parts.map((part) => (
+                                        <tr key={part.id}>
+                                            <td>{part.name}</td>
+                                            <td>{part.number}</td>
+                                            <td>R$ {Number(part.price).toFixed(2)}</td>
+                                            <td>
+                                                <Pencil size={22} className="link me-3 text-primary" onClick={() => handleEditPart(part.id)} />
+                                                <Trash size={22} className="link text-danger" onClick={() => { setPartId(part.id); setPartName(part.name); setShowModal(true); }} />
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -96,6 +115,7 @@ export default function Parts() {
                 )}
             </div>
             <ToastComponent title={title} message={message} show={show} onClose={() => setShow(false)} />
+            <ModalComponent title={'Deletar Peça'} message={'Confirma a exclusão da peça ' + partName + '?'} show={showModal} onClose={() => setShowModal(false)} event={handleDeletePart} />
         </div>
     );
 }
